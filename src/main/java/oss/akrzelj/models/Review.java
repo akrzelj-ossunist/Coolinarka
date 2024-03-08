@@ -6,8 +6,10 @@ import lombok.*;
 
 @Entity
 @Table(name = "Reviews")
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Review {
 
     @Id

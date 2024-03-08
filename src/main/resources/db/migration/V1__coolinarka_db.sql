@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS Users (
     last_name VARCHAR(50),
     date_of_birth DATE,
     bio TEXT,
-    profile_picture BYTEA,
     superuser BOOLEAN DEFAULT FALSE, -- New column for indicating superuser status
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_login TIMESTAMP
@@ -19,8 +18,7 @@ CREATE TABLE IF NOT EXISTS Recipe (
     name TEXT NOT NULL,
     description TEXT,
     instructions TEXT[],
-    ingredients TEXT[],
-    amounts TEXT[],
+    ingredients JSONB[], -- Using JSONB instead of OBJECT
     user_id CHAR(36) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
 );

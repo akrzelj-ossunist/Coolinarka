@@ -5,8 +5,10 @@ import lombok.*;
 
 @Entity
 @Table(name = "Recipe")
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Recipe {
 
     @Id
@@ -25,12 +27,8 @@ public class Recipe {
     private String[] instructions;
 
     @ElementCollection
-    @Column(name = "ingredients")
+    @Column(name = "ingredients", columnDefinition = "JSONB[]")
     private String[] ingredients;
-
-    @ElementCollection
-    @Column(name = "amounts")
-    private String[] amounts;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)

@@ -6,8 +6,10 @@ import lombok.*;
 
 @Entity
 @Table(name = "Favorites")
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Favorites {
 
     @Id

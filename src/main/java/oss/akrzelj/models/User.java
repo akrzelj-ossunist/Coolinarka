@@ -7,8 +7,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Users")
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -36,10 +38,6 @@ public class User {
 
     @Column(name = "bio", columnDefinition = "TEXT")
     private String bio;
-
-    @Lob
-    @Column(name = "profile_picture")
-    private byte[] profilePicture;
 
     @Column(name = "superuser", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean superuser;
