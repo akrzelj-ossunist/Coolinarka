@@ -1,15 +1,18 @@
 package oss.akrzelj.controllers.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import oss.akrzelj.controllers.interfaces.FavoriteController;
 import oss.akrzelj.dtos.FavoritesDto;
-import oss.akrzelj.dtos.FavoritesResDto;
 import oss.akrzelj.dtos.RecipeResDto;
-import oss.akrzelj.mappers.FavoritesMapper;
+import oss.akrzelj.exceptions.AlreadyExistException;
+import oss.akrzelj.exceptions.InvalidArgumentsException;
+import oss.akrzelj.exceptions.ObjectDoesntExistException;
 import oss.akrzelj.services.interfaces.FavoriteService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,20 +27,32 @@ public class FavoriteControllerImpl implements FavoriteController {
     }
 
     @Override
-    public ResponseEntity<Boolean> addToFavorites(FavoritesDto favoritesDto) {
-
-        FavoritesResDto favorited = favoriteService.addToFavorites(favoritesDto);
-        return null;
+    @PostMapping("/")
+    public ResponseEntity<Boolean> addToFavorites(FavoritesDto favoritesDto) throws InvalidArgumentsException, ObjectDoesntExistException, AlreadyExistException {
+        favoriteService.addToFavorites(favoritesDto);
+        return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
     @Override
-    public ResponseEntity<Boolean> removeFromFavorites(String favoritesId) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> removeFromFavorites(@PathVariable("id") String favoritesId) throws ObjectDoesntExistException, InvalidArgumentsException {
         favoriteService.remove(favoritesId);
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
     @Override
-    public ResponseEntity<RecipeResDto> listAllFavorites(String userId, Map<String, String> allParams) {
-        return null;
+    @GetMapping("/list/user/{id}")
+    public ResponseEntity<List<RecipeResDto>> getAll(@PathVariable("id") String userId, @RequestParam Map<String, String> allParams){
+        int page = Integer.parseInt(allParams.get("page"));
+        int size = Integer.parseInt(allParams.get("size"));
+        List<RecipeResDto> favorites = favoriteService.getAll(userId, page, size);
+        return ResponseEntity.ok().body(favorites);
+    }
+
+    @Override
+    @GetMapping("/query/user/{id}")
+    public ResponseEntity<List<RecipeResDto>> listAllFavorites(@PathVariable("id") String userId, @RequestParam Map<String, String> allParams) {
+        List<RecipeResDto> filteredFavorites = favoriteService.filterByParams(userId, allParams);
+        return ResponseEntity.ok().body(filteredFavorites);
     }
 }
