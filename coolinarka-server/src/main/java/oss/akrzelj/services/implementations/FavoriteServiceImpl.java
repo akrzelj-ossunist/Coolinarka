@@ -50,7 +50,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public List<RecipeResDto> getAll(String userId, int page, int size) {
+    public List<RecipeResDto> getAll(String userId, int page, int size) throws ObjectDoesntExistException, InvalidArgumentsException {
         User user = userService.findUserById(userId);
         List<Favorites> favorites = favoriteRepository.findByUser(user, PageRequest.of(page, size));
         List<Recipe> recipes = favorites.stream().map(Favorites::getRecipe).toList();

@@ -1,7 +1,9 @@
 package oss.akrzelj.services.interfaces;
 
 import oss.akrzelj.dtos.UserDto;
+import oss.akrzelj.dtos.UserPageDto;
 import oss.akrzelj.dtos.UserResDto;
+import oss.akrzelj.exceptions.*;
 import oss.akrzelj.models.User;
 
 import java.util.List;
@@ -9,21 +11,21 @@ import java.util.Map;
 
 public interface UserService {
 
-    UserResDto addUser(UserDto userDto);
+    UserResDto addUser(UserDto userDto) throws InvalidArgumentsException, PasswordMismatchException, AlreadyExistException, EmailMismatchException;
 
-    User validateLogin(UserDto userLoginDto);
+    UserResDto validateLogin(UserDto userLoginDto) throws InvalidArgumentsException, ObjectDoesntExistException, PasswordMismatchException;
 
-    void deleteUser(String userId);
+    void deleteUser(String userId) throws InvalidArgumentsException, ObjectDoesntExistException;
 
-    UserResDto updateUser(String userId, UserDto userDto);
+    UserResDto updateUser(String userId, UserDto userDto) throws InvalidArgumentsException, ObjectDoesntExistException;
 
-    User findUserById(String userId);
+    User findUserById(String userId) throws InvalidArgumentsException, ObjectDoesntExistException;
 
-    UserResDto findUserByEmail(String email);
+    UserResDto findUserByEmail(String email) throws InvalidArgumentsException, ObjectDoesntExistException;
 
-    List<UserResDto> findAllUsers(Map<String, String> allParams);
+    UserPageDto findAllUsers(Map<String, String> allParams);
 
-    void userChangePassword(String userId, UserDto userDto);
+    void userChangePassword(String userId, UserDto userDto) throws InvalidArgumentsException, PasswordMismatchException, ObjectDoesntExistException;
 
-    List<UserResDto> filterUsers(Map<String, String> allParams);
+    UserPageDto filterUsers(Map<String, String> allParams);
 }

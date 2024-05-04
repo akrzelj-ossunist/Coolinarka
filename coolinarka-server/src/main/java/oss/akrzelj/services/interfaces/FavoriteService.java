@@ -14,7 +14,7 @@ public interface FavoriteService {
 
     void addToFavorites(FavoritesDto favoritesDto) throws InvalidArgumentsException, AlreadyExistException, ObjectDoesntExistException;
 
-    List<RecipeResDto> getAll(String userId, int page, int size);
+    List<RecipeResDto> getAll(String userId, int page, int size) throws ObjectDoesntExistException, InvalidArgumentsException;
 
     List<RecipeResDto> filterByParams(String userId, Map<String, String> allParams);
 

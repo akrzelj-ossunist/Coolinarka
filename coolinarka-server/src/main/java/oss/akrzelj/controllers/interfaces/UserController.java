@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
 import oss.akrzelj.dtos.LoginResDto;
 import oss.akrzelj.dtos.UserDto;
+import oss.akrzelj.dtos.UserPageDto;
 import oss.akrzelj.dtos.UserResDto;
 import oss.akrzelj.exceptions.*;
 
@@ -22,7 +23,7 @@ public interface UserController {
      * Receives login info for user from client side and sends it to service side
      * In case user exists returns true if not returns bad request
      **/
-    ResponseEntity<LoginResDto> login(UserDto userLoginDto) throws InvalidArgumentsException, ObjectDoesntExistException;
+    ResponseEntity<LoginResDto> login(UserDto userLoginDto) throws InvalidArgumentsException, ObjectDoesntExistException, PasswordMismatchException;
 
     /**
      * Receives info for user we want to edit from client side and sends it to service side
@@ -43,14 +44,14 @@ public interface UserController {
     ResponseEntity<Boolean> changePassword(String userId, UserDto userPasswordDto) throws InvalidArgumentsException, PasswordMismatchException, ObjectDoesntExistException, AlreadyExistException;
 
     /** Sends user list from server to client side **/
-    ResponseEntity<List<UserResDto>> list(Map<String, String> allParams);
+    ResponseEntity<UserPageDto> list(Map<String, String> allParams);
 
     /** Takes user id from params and looks for user if exist send user to client side if not sends bad req **/
     ResponseEntity<UserResDto> profile(String userId) throws ObjectDoesntExistException, InvalidArgumentsException;
 
     /** Takes all params from link and filters all users then sends that list to client side **/
-    ResponseEntity<List<UserResDto>> filterList(Map<String, String> allParams) throws InvalidArgumentsException;
+    ResponseEntity<UserPageDto> filterList(Map<String, String> allParams) throws InvalidArgumentsException;
 
-    ResponseEntity<List<UserResDto>> searchList(String search) throws InvalidArgumentsException;
+    ResponseEntity<UserPageDto> searchList(String search) throws InvalidArgumentsException;
 
 }

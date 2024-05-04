@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import oss.akrzelj.controllers.interfaces.UserController;
 import oss.akrzelj.dtos.LoginResDto;
 import oss.akrzelj.dtos.UserDto;
+import oss.akrzelj.dtos.UserPageDto;
 import oss.akrzelj.dtos.UserResDto;
 import oss.akrzelj.exceptions.*;
 import oss.akrzelj.mappers.UserMapper;
@@ -24,15 +25,15 @@ import java.util.Objects;
 @CrossOrigin
 public class UserControllerImpl implements UserController {
 
-    private final UserMapper userMapper;
     private final UserService userService;
     private final TokenGenerator tokenGenerator;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserControllerImpl(UserService userService, UserMapper userMapper, TokenGenerator tokenGenerator) {
-        this.userMapper = userMapper;
+    public UserControllerImpl(UserService userService, TokenGenerator tokenGenerator, UserMapper userMapper) {
         this.userService = userService;
         this.tokenGenerator = tokenGenerator;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -44,15 +45,15 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @PostMapping("/login")
-    public ResponseEntity<LoginResDto> login(UserDto userLoginDto) throws InvalidArgumentsException, ObjectDoesntExistException {
-        User user = userService.validateLogin(userLoginDto);
+    public ResponseEntity<LoginResDto> login(UserDto userLoginDto) throws InvalidArgumentsException, ObjectDoesntExistException, PasswordMismatchException {
+        UserResDto user = userService.validateLogin(userLoginDto);
 
         String jwtToken = tokenGenerator.generateToken(String.valueOf(user.getRole()), user.getId());
 
         LoginResDto loginResDto = LoginResDto.builder()
                 .success(true)
                 .token(jwtToken)
-                .userResDto(userMapper.userToUserDto(user))
+                .userResDto(user)
                 .build();
 
         return ResponseEntity.status(HttpStatus.OK).body(loginResDto);
@@ -81,9 +82,9 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @GetMapping("/list")
-    public ResponseEntity<List<UserResDto>> list(@RequestParam Map<String, String> allParams) {
-        List<UserResDto> userList = userService.findAllUsers(allParams);
-        if (userList.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    public ResponseEntity<UserPageDto> list(@RequestParam Map<String, String> allParams) {
+        UserPageDto userList = userService.findAllUsers(allParams);
+
         return ResponseEntity.ok().body(userList);
     }
 
@@ -96,20 +97,20 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @GetMapping("/filter")
-    public ResponseEntity<List<UserResDto>> filterList(@RequestParam Map<String, String> allParams) throws InvalidArgumentsException {
-        List<UserResDto> filteredList = userService.filterUsers(allParams);
-        return ResponseEntity.ok().body(filteredList);
+    public ResponseEntity<UserPageDto> filterList(@RequestParam Map<String, String> allParams) throws InvalidArgumentsException {
+        UserPageDto userPageDto = userService.filterUsers(allParams);
+        return ResponseEntity.ok().body(userPageDto);
     }
 
     @Override
     @GetMapping("/search")
-    public ResponseEntity<List<UserResDto>> searchList(@RequestParam String search) throws InvalidArgumentsException {
+    public ResponseEntity<UserPageDto> searchList(@RequestParam String search) throws InvalidArgumentsException {
 
         if (Objects.equals(search, "")) throw new InvalidArgumentsException("Sent arguments cannot be null!");
         System.out.println(search);
-        List<User> searchedUsers = new ArrayList<>();
+        UserPageDto searchedUsers = UserPageDto.builder().build();
         //List<User> searchedUsers = userService.findByPartialFullName(search);
 
-        return ResponseEntity.ok().body(userMapper.userListToUserDtoList(searchedUsers));
+        return ResponseEntity.ok().body(searchedUsers);
     }
 }
