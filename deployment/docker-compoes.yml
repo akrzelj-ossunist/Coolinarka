@@ -1,0 +1,54 @@
+  version: '3'
+  services:
+    your-service:
+      image: ${IMAGE_NAME}
+      environment:
+        - SPRING_DATASOURCE_URL=${DB_URL}
+        - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+        - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+        - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      ports:
+        - ${BACKEND_PORT}
+      depends_on:
+        - ${DB_CONTAINER_NAME}
+
+    coolinarka-fe:
+      image: coolinarka-client
+      container_name: coolinarka-client
+      depends_on:
+        - your-service
+      volumes:
+        - coolinarka_fe_data:/var/lib/coolinarka_fe/data
+      ports:
+        - "3001:3000"
+
+    db:
+      image: ${DB_IMAGE}
+      container_name: ${DB_CONTAINER_NAME}
+      environment:
+        POSTGRES_PASSWORD: ${DB_PASSWORD}
+        POSTGRES_USER: ${DB_USERNAME}
+        POSTGRES_DB: ${DB_NAME}
+      ports:
+        - ${DB_PORT}
+      volumes:
+        - coolinarka_data:/var/lib/postgresql/data
+
+    cloudbeaver:
+      image: dbeaver/cloudbeaver:latest
+      restart: always
+      container_name: cloudbeaver
+      volumes:
+        - coolinarka_dbeaver_data:/opt/cloudbeaver/workspace
+      ports:
+        - ${CLOUDBEAVER_PORT}
+
+  volumes:
+    coolinarka_fe_data:
+      driver: local
+    coolinarka_data:
+      driver: local
+    coolinarka_dbeaver_data:
+      driver: local
+
+
