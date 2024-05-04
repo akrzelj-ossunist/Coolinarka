@@ -16,7 +16,7 @@ public interface FavoriteController {
 
     ResponseEntity<Boolean> removeFromFavorites(String favoritesId) throws ObjectDoesntExistException, InvalidArgumentsException;
 
-    ResponseEntity<List<RecipeResDto>> getAll(String userId, Map<String, String> allParams);
+    ResponseEntity<List<RecipeResDto>> getAll(String userId, Map<String, String> allParams) throws ObjectDoesntExistException, InvalidArgumentsException;
 
     public ResponseEntity<List<RecipeResDto>> listAllFavorites(String userId, Map<String, String> allParams);
 

@@ -42,7 +42,7 @@ public class FavoriteControllerImpl implements FavoriteController {
 
     @Override
     @GetMapping("/list/user/{id}")
-    public ResponseEntity<List<RecipeResDto>> getAll(@PathVariable("id") String userId, @RequestParam Map<String, String> allParams){
+    public ResponseEntity<List<RecipeResDto>> getAll(@PathVariable("id") String userId, @RequestParam Map<String, String> allParams) throws ObjectDoesntExistException, InvalidArgumentsException {
         int page = Integer.parseInt(allParams.get("page"));
         int size = Integer.parseInt(allParams.get("size"));
         List<RecipeResDto> favorites = favoriteService.getAll(userId, page, size);
