@@ -4,6 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import oss.akrzelj.dtos.ReviewDto;
 import oss.akrzelj.dtos.ReviewResDto;
+import oss.akrzelj.exceptions.InvalidArgumentsException;
+import oss.akrzelj.exceptions.ObjectDoesntExistException;
 import oss.akrzelj.models.Review;
 import oss.akrzelj.services.interfaces.RecipeService;
 import oss.akrzelj.services.interfaces.UserService;
@@ -17,7 +19,7 @@ public interface ReviewMapper {
     @Mapping(target = "user", expression = "java(userService.findUserById(reviewDto.getUser()))")
     @Mapping(target = "recipe", expression = "java(recipeService.filterById(reviewDto.getRecipe()))")
     @Mapping(target = "createdAt", expression = "java(new java.util.Date())")
-    Review reviewDtoToReview(ReviewDto reviewDto, RecipeService recipeService, UserService userService);
+    Review reviewDtoToReview(ReviewDto reviewDto, RecipeService recipeService, UserService userService) throws InvalidArgumentsException, ObjectDoesntExistException;
 
     ReviewResDto reviewToReviewDto(Review review);
 

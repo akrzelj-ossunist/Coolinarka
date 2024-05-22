@@ -34,8 +34,8 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "date_of_birth")
-    private Date dateOfBirth;
+    @Column(name = "birthday")
+    private Date birthday;
 
     @Column(name = "bio", columnDefinition = "TEXT")
     private String bio;

@@ -38,14 +38,15 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @PostMapping("/register")
-    public ResponseEntity<UserResDto> register(UserDto userDto) throws EmailMismatchException, PasswordMismatchException, AlreadyExistException, InvalidArgumentsException {
+    public ResponseEntity<UserResDto> register(@RequestBody UserDto userDto) throws EmailMismatchException, PasswordMismatchException, AlreadyExistException, InvalidArgumentsException {
+        System.out.println(userDto + " FETCHED USER");
         UserResDto user = userService.addUser(userDto);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @Override
     @PostMapping("/login")
-    public ResponseEntity<LoginResDto> login(UserDto userLoginDto) throws InvalidArgumentsException, ObjectDoesntExistException, PasswordMismatchException {
+    public ResponseEntity<LoginResDto> login(@RequestBody UserDto userLoginDto) throws InvalidArgumentsException, ObjectDoesntExistException, PasswordMismatchException {
         UserResDto user = userService.validateLogin(userLoginDto);
 
         String jwtToken = tokenGenerator.generateToken(String.valueOf(user.getRole()), user.getId());

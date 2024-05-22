@@ -24,7 +24,7 @@ public class UserResDto {
 
     private String lastName;
 
-    private Date dateOfBirth;
+    private Date birthday;
 
     private String bio;
 

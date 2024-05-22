@@ -23,14 +23,10 @@ public class UserDto {
     private String email;
 
     @NotBlank
-    @Email
-    private String repeatEmail;
-
-    @NotBlank
     private String password;
 
     @NotBlank
-    private String repeatPassword;
+    private String confirmPassword;
 
     @NotBlank
     private String firstName;
@@ -39,7 +35,7 @@ public class UserDto {
     private String lastName;
 
     @NotBlank
-    private Date dateOfBirth;
+    private Date birthday;
 
     private String bio;
 }

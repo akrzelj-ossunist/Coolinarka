@@ -35,9 +35,7 @@ public class UserServiceImpl implements UserService {
     public UserResDto addUser(UserDto userDto) throws InvalidArgumentsException, PasswordMismatchException, AlreadyExistException, EmailMismatchException {
         if(userDto == null) throw new InvalidArgumentsException("Entered arguments are invalid!");
 
-        if(!Objects.equals(userDto.getPassword(), userDto.getRepeatPassword())) throw new PasswordMismatchException("Entered passwords doesn't match!");
-
-        if(!Objects.equals(userDto.getEmail(), userDto.getRepeatEmail())) throw new EmailMismatchException("Entered emails doesn't match!");
+        if(!Objects.equals(userDto.getPassword(), userDto.getConfirmPassword())) throw new PasswordMismatchException("Entered passwords doesn't match!");
 
         Optional<User> existingUser = userRepository.findByEmail(userDto.getEmail());
         if(existingUser.isPresent()) throw new AlreadyExistException("User already exist in database!");
@@ -82,7 +80,7 @@ public class UserServiceImpl implements UserService {
     public User updatedUser(User user, UserDto userDto) {
 
         user.setUsername(userDto.getUsername());
-        user.setDateOfBirth(userDto.getDateOfBirth());
+        user.setBirthday(userDto.getBirthday());
         user.setBio(userDto.getBio());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
@@ -133,7 +131,7 @@ public class UserServiceImpl implements UserService {
     public void userChangePassword(String userId, UserDto userDto) throws InvalidArgumentsException, PasswordMismatchException, ObjectDoesntExistException {
         if(userId == null || userDto == null) throw new InvalidArgumentsException("Entered user id or user info cannot be null!");
 
-        if(!Objects.equals(userDto.getPassword(), userDto.getRepeatPassword())) throw new PasswordMismatchException("Entered passwords doesn't match!");
+        if(!Objects.equals(userDto.getPassword(), userDto.getConfirmPassword())) throw new PasswordMismatchException("Entered passwords doesn't match!");
 
         User user = findUserById(userId);
         if(user == null) throw new ObjectDoesntExistException("User doesn't exist in library!");
