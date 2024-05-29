@@ -48,6 +48,7 @@ const Layout: React.FC<{ children: JSX.Element }> = ({ children }) => {
       logo: <SettingsIcon className="w-9 h-9" />,
     },
   ];
+
   return (
     <div className="flex h-screen">
       <SideNav
@@ -55,7 +56,7 @@ const Layout: React.FC<{ children: JSX.Element }> = ({ children }) => {
         navContent={mainSideNav}
       />
       <Navbar sx={"desktop:hidden"} navContent={mainSideNav} />
-      <div className="pl-16 py-14 pr-10 overflow-y-auto tablet:w-full tablet:px-4">
+      <div className="pl-16 py-14 pr-10 overflow-y-auto w-[84%] tablet:w-full tablet:px-4 tablet:py-28">
         {children}
       </div>
       <SideNav sx={"rounded-l-2xl hidden fixed top-0 right-0 w-[310px]"} />

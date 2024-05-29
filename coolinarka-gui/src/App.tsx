@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import { useEffect } from "react";
+import CreateRecipe from "./pages/CreateRecipe";
 
 function App() {
   const navigate = useNavigate();
@@ -25,6 +26,10 @@ function App() {
     {
       path: "/Profile",
       element: <Profile />,
+    },
+    {
+      path: "/Create-recipe",
+      element: <CreateRecipe />,
     },
   ]);
 

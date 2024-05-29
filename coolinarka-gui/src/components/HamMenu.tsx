@@ -7,6 +7,7 @@ import { AppDispacth, RootState } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import { useOnClickOutside } from "usehooks-ts";
+import CreateRecipeIcon from "../assets/CreateRecipeIcon";
 
 const HamMenu: React.FC<{
   navContent?: any[];
@@ -33,19 +34,43 @@ const HamMenu: React.FC<{
           content.title !== "Logo" &&
           (content.title === "Settings" ? (
             authenticate.success ? (
-              <div
-                className="flex items-center my-4 w-full cursor-pointer hover:bg-slate-200 ease-in-out duration-300 px-6 py-2"
-                onClick={() => {
-                  setShowMenu(false);
-                  dispatch(logout());
-                }}>
-                <LogoutIcon className="w-8 h-8" />
-                <p className="font-bold text-[#bbbbbb] text-xl m-2 mt-3">
-                  Logout
-                </p>
+              <div key={index}>
+                <Link
+                  to={`/Create-recipe`}
+                  onClick={() => setShowMenu(false)}
+                  className={`flex items-center w-full cursor-pointer ease-in-out duration-300 hover:bg-slate-200 px-6 py-2 ${
+                    path === "/Create-recipe" && "border-r-4 border-[#40514e]"
+                  }`}>
+                  <p key={index} className=" flex justify-center">
+                    <CreateRecipeIcon
+                      className="w-8 h-8 ease-in-out duration-300"
+                      fill={path === "/Create-recipe" ? "#11999e" : "#bbbbbb"}
+                    />
+                  </p>
+                  <p
+                    className={`font-bold ${
+                      path === "/Create-recipe"
+                        ? "text-[#40514e]"
+                        : "text-[#bbbbbb]"
+                    } text-xl m-2 mt-3 ease-in-out duration-300`}>
+                    Create recipe
+                  </p>
+                </Link>
+                <div
+                  className="flex items-center my-4 w-full cursor-pointer hover:bg-slate-200 ease-in-out duration-300 px-6 py-2"
+                  onClick={() => {
+                    setShowMenu(false);
+                    dispatch(logout());
+                  }}>
+                  <LogoutIcon className="w-8 h-8" />
+                  <p className="font-bold text-[#bbbbbb] text-xl m-2 mt-3">
+                    Logout
+                  </p>
+                </div>
               </div>
             ) : (
               <Link
+                key={index}
                 to={`/Login`}
                 onClick={() => setShowMenu(false)}
                 className={`flex items-center w-full cursor-pointer ease-in-out duration-300 hover:bg-slate-200 px-6 py-2 ${
@@ -67,6 +92,7 @@ const HamMenu: React.FC<{
             )
           ) : (
             <Link
+              key={index}
               onClick={() => setShowMenu(false)}
               to={`/${content.title}`}
               className={`flex items-center w-full cursor-pointer ease-in-out duration-300 hover:bg-slate-200 px-6 py-2 ${

@@ -11,9 +11,9 @@ export default function HamMenuIcon(props: any) {
       <g
         id="Page-1"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
-        fill-rule="evenodd">
+        fillRule="evenodd">
         <g
           id="Dribbble-Light-Preview"
           transform="translate(-139.000000, -200.000000)"

@@ -6,7 +6,7 @@ const Home: React.FC = () => {
   const authenticateState = useSelector(
     (state: RootState) => state.authenticate
   );
-  console.log(authenticateState);
+
   return <div>Home!!!</div>;
 };
 

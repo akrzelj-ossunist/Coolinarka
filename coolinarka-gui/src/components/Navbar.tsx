@@ -1,4 +1,4 @@
-import HamMenu from "../assets/HamMenu";
+import HamMenu from "./HamMenu";
 import HamMenuIcon from "../assets/HamMenuIcon";
 import { useState } from "react";
 
@@ -7,6 +7,10 @@ const Navbar: React.FC<{ sx?: string; navContent?: any[] }> = ({
   navContent,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
+
+  const handleMenuToggle = () => {
+    setShowMenu((prevState) => !prevState);
+  };
 
   return (
     <div
@@ -23,9 +27,7 @@ const Navbar: React.FC<{ sx?: string; navContent?: any[] }> = ({
         })}
         <HamMenuIcon
           className="w-9 h-9 cursor-pointer phone:w-8"
-          onClick={() => {
-            !showMenu && setShowMenu(true);
-          }}
+          onClick={handleMenuToggle}
         />
         <HamMenu
           navContent={navContent}

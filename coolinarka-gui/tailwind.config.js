@@ -26,9 +26,9 @@ export default {
     screens: {
       'phone': {"max": '450px'},
   
-      'tablet': {"max": '850px'},
+      'tablet': {"max": '1150px'},
   
-      'desktop': {"min": '851px'},
+      'desktop': {"min": '1151px'},
     },
   },
   plugins: [],

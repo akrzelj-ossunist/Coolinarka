@@ -25,9 +25,35 @@ export interface IRegister {
   firstName: string;
   lastName: string;
   username: string;
-  birthday: Date | null;
+  birthday: Date | string;
   email: string;
   password: string;
   confirmPassword: string;
   bio: string;
+}
+
+export interface Ingredient {
+  ingredient: string;
+  amount: string;
+  unit: string;
+}
+
+export interface Phase {
+  index: number;
+  description: string;
+}
+
+export interface FormValues {
+  image: "" | null;
+  name: string;
+  description: string;
+  ingredients: Ingredient[];
+  phases: Phase[];
+  people: number;
+  prepTime: number;
+  difficulty: string;
+  country: string;
+  mealGroup: string[];
+  events: string[];
+  season: string;
 }

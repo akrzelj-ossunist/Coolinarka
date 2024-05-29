@@ -3,6 +3,8 @@ package oss.akrzelj.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "Recipe")
 @Data
@@ -13,25 +15,37 @@ public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
+    @Column
     private String id;
 
-    @Column(name = "name", nullable = false)
+    @Column
+    private String image;
+
+    @Column
     private String name;
 
-    @Column(name = "description", columnDefinition = "TEXT")
+    @Column
     private String description;
 
-    @ElementCollection
-    @Column(name = "instructions")
-    private String[] instructions;
+    @Column
+    private String country;
 
-    @ElementCollection
-    @Column(name = "ingredients", columnDefinition = "JSONB[]")
-    private String[] ingredients;
+    @Column
+    private String difficulty;
+
+    @Column
+    private int people;
+
+    @Column
+    private int prepTime;
+
+    @Column(name = "created_at")
+    private Date createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
+
+    private String season;
 }
 

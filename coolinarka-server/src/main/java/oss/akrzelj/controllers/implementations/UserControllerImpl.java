@@ -41,6 +41,7 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<UserResDto> register(@RequestBody UserDto userDto) throws EmailMismatchException, PasswordMismatchException, AlreadyExistException, InvalidArgumentsException {
         System.out.println(userDto + " FETCHED USER");
         UserResDto user = userService.addUser(userDto);
+        System.out.println(user.getBirthday() + " User bdaaaaaaaaaaaaaaaaay!");
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 

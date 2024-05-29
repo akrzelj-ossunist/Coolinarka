@@ -1,15 +1,17 @@
 package oss.akrzelj.services.interfaces;
 
-import oss.akrzelj.dtos.RecipeDto;
 import oss.akrzelj.dtos.RecipeResDto;
+import oss.akrzelj.dtos.recipe.RecipeDto;
+import oss.akrzelj.exceptions.InvalidArgumentsException;
 import oss.akrzelj.models.Recipe;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 public interface RecipeService {
 
-    RecipeResDto createRecipe(RecipeDto recipeDto);
+    Boolean createRecipe(RecipeDto recipeDto) throws InvalidArgumentsException, IOException;
 
     RecipeResDto updateRecipe(String recipeId, RecipeDto recipeDto);
 
