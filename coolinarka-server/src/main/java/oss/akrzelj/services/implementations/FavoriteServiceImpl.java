@@ -60,7 +60,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     public List<RecipeResDto> filterByParams(String userId, Map<String, String> allParams) {
 
-        List<RecipeResDto> filteredRecipes = recipeService.filterRecipes(allParams);
+        //List<RecipeResDto> filteredRecipes = recipeService.filterRecipes(allParams);
 
 
         return null;
@@ -79,7 +79,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public Favorites findByRecipeId(String recipeId) {
-        Recipe recipe = recipeService.filterById(recipeId);
-        return favoriteRepository.findByRecipe(recipe);
+        //Recipe recipe = recipeService.filterById(recipeId);
+        return null;
     }
 }

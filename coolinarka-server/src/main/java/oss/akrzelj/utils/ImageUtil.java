@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Component
-public class SaveImage {
+public class ImageUtil {
 
     public void save(String uploadDir, String fileName, MultipartFile file) throws IOException {
         Path uploadPath = Paths.get(uploadDir);
@@ -27,6 +27,18 @@ public class SaveImage {
         } catch (IOException ioe){
             throw new IOException("Could not save image file: " + fileName, ioe);
         }
+    }
 
+    public void delete(String imageName) {
+        // Path to the uploads directory
+        Path uploadsDir = Paths.get("../coolinarka-gui/src/uploads");
+        Path imagePath = uploadsDir.resolve(imageName);
+
+        // Delete the image file if it exists
+        try {
+            Files.deleteIfExists(imagePath);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to delete image file: " + imageName, e);
+        }
     }
 }

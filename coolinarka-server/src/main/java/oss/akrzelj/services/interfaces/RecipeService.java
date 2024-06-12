@@ -2,7 +2,10 @@ package oss.akrzelj.services.interfaces;
 
 import oss.akrzelj.dtos.RecipeResDto;
 import oss.akrzelj.dtos.recipe.RecipeDto;
+import oss.akrzelj.dtos.recipe.RecipePageDto;
+import oss.akrzelj.dtos.recipe.response.RecipeResponseDto;
 import oss.akrzelj.exceptions.InvalidArgumentsException;
+import oss.akrzelj.exceptions.ObjectDoesntExistException;
 import oss.akrzelj.models.Recipe;
 
 import java.io.IOException;
@@ -15,18 +18,14 @@ public interface RecipeService {
 
     RecipeResDto updateRecipe(String recipeId, RecipeDto recipeDto);
 
-    void deleteRecipe(String recipeId);
+    void deleteRecipe(String recipeId) throws ObjectDoesntExistException;
 
-    List<RecipeResDto> listAllRecipes(Map<String, String> allParams); //filter page, perPage and sort
+    RecipePageDto listAllRecipes(Map<String, String> allParams); //filter page, perPage and sort
 
-    List<RecipeResDto> filterRecipes(Map<String, String> allParams); //all random shit and filter page, perPage and sort
+    RecipePageDto filterRecipes(Map<String, String> allParams); //all random shit and filter page, perPage and sort
 
-    Recipe filterById(String recipeId);
+    RecipeResponseDto filterById(String recipeId) throws ObjectDoesntExistException;
 
-    RecipeResDto filterByName(String recipeName);
-
-    List<RecipeResDto> filterByUser(String userId, Map<String, String> allParams); //filter page, perPage and sort
-
-    List<RecipeResDto> filterByIngredients(Map<String, String> allParams); // filter all ingredients and filter page, perPage and sort
+    RecipePageDto filterByUser(String userId, Map<String, String> allParams); //filter page, perPage and sort
 
 }

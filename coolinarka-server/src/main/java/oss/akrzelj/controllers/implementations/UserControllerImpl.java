@@ -39,9 +39,7 @@ public class UserControllerImpl implements UserController {
     @Override
     @PostMapping("/register")
     public ResponseEntity<UserResDto> register(@RequestBody UserDto userDto) throws EmailMismatchException, PasswordMismatchException, AlreadyExistException, InvalidArgumentsException {
-        System.out.println(userDto + " FETCHED USER");
         UserResDto user = userService.addUser(userDto);
-        System.out.println(user.getBirthday() + " User bdaaaaaaaaaaaaaaaaay!");
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
@@ -63,22 +61,22 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @PutMapping("/{id}")
-    public ResponseEntity<UserResDto> edit(@PathVariable String userId, UserDto userDto) throws InvalidArgumentsException, ObjectDoesntExistException, AlreadyExistException {
-        UserResDto updatedUser = userService.updateUser(userId, userDto);
+    public ResponseEntity<UserResDto> edit(@PathVariable String id, @RequestBody UserDto userDto) throws InvalidArgumentsException, ObjectDoesntExistException, AlreadyExistException {
+        UserResDto updatedUser = userService.updateUser(id, userDto);
         return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
     }
 
     @Override
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable String userId) throws ObjectDoesntExistException, AlreadyExistException, InvalidArgumentsException {
-        userService.deleteUser(userId);
+    public ResponseEntity<Boolean> delete(@PathVariable String id) throws ObjectDoesntExistException, AlreadyExistException, InvalidArgumentsException {
+        userService.deleteUser(id);
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
     @Override
     @PutMapping("/change-password/{id}")
-    public ResponseEntity<Boolean> changePassword(@PathVariable String userId, UserDto userPasswordDto) throws InvalidArgumentsException, PasswordMismatchException, ObjectDoesntExistException, AlreadyExistException {
-        userService.userChangePassword(userId, userPasswordDto);
+    public ResponseEntity<Boolean> changePassword(@PathVariable String id, @RequestBody UserDto userPasswordDto) throws InvalidArgumentsException, PasswordMismatchException, ObjectDoesntExistException, AlreadyExistException {
+        userService.userChangePassword(id, userPasswordDto);
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
@@ -92,8 +90,8 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<UserResDto> profile(@PathVariable String userId) throws ObjectDoesntExistException, InvalidArgumentsException {
-        User userProfile = userService.findUserById(userId);
+    public ResponseEntity<UserResDto> profile(@PathVariable String id) throws ObjectDoesntExistException, InvalidArgumentsException {
+        User userProfile = userService.findUserById(id);
         return ResponseEntity.ok().body(userMapper.userToUserDto(userProfile));
     }
 

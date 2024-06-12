@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserPageDto findAllUsers(Map<String, String> allParams) {
         int page = allParams.get("page") != null ? Integer.parseInt(allParams.get("page")) - 1 : 0;
-        int size = allParams.get("size") != null ? Integer.parseInt(allParams.get("size")) : 10;
+        int size = allParams.get("size") != null ? Integer.parseInt(allParams.get("size")) : 1;
 
         Pageable pageable = (Pageable) PageRequest.of(page, size);
 
@@ -148,11 +148,10 @@ public class UserServiceImpl implements UserService {
 
         Pageable pageable = (Pageable) PageRequest.of(page, size);
 
-        List<User> userList = userRepository.findByUsernameAndFirstNameAndLastNameAndEmail(
+        List<User> userList = userRepository.findByUsernameAndFirstNameAndLastName(
                 allParams.get("username"),
                 allParams.get("firstName"),
                 allParams.get("lastName"),
-                allParams.get("email"),
                 pageable).getContent();
 
         return UserPageDto.builder()

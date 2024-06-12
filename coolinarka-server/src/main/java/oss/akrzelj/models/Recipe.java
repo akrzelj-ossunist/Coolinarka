@@ -1,12 +1,15 @@
 package oss.akrzelj.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "Recipe")
+@Table(name = "recipe")
 @Data
 @Builder
 @NoArgsConstructor
@@ -46,6 +49,7 @@ public class Recipe {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
+    @Column
     private String season;
 }
 

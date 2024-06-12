@@ -18,16 +18,17 @@ import java.util.List;
 @AllArgsConstructor
 public class RecipeResponseDto {
     private String id;
+    private String image;
     private String name;
     private String description;
     private UserResDto user;
     private String country;
-    private RecipeDiff difficulty;
+    private String difficulty;
     private int people;
     private int prepTime;
+    private String season;
     private List<RecipeIngredientResponseDto> ingredients = new ArrayList<>();
     private List<RecipePhaseResponseDto> phases = new ArrayList<>();
     private List<String> mealGroups = new ArrayList<>();
     private List<String> events = new ArrayList<>();
-    private List<String> seasons = new ArrayList<>();
 }
