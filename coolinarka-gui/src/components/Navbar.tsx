@@ -14,7 +14,7 @@ const Navbar: React.FC<{ sx?: string; navContent?: any[] }> = ({
 
   return (
     <div
-      className={`${sx} bg-red shadow-2xl flex fixed top-0 left-0 z-50 w-full`}>
+      className={`${sx} bg-red shadow-2xl flex fixed top-0 left-0 z-50 w-full bg-white`}>
       <div className="flex justify-between items-center px-10 py-2 w-full phone:px-7 relative">
         {navContent?.map((content, index) => {
           return (

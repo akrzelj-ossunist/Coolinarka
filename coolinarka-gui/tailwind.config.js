@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        lightGray: 'hsl(0, 0%, 80%)',
+      },
       strokeWidth: {
         '0.99999982': '0.99999982',
         '0.99999994': '0.99999994',

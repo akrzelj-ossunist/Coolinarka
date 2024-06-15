@@ -17,10 +17,11 @@ public interface RecipeRepository extends JpaRepository<Recipe, String> {
     Page<Recipe> findByUserId(String userId, Pageable pageable);
 
     @Query("SELECT r FROM Recipe r WHERE "
-            + "(:name IS NULL OR LENGTH(:name) < 3 OR LOWER(r.name) LIKE %:name%) "
+            + "(:name IS NULL OR :name = '' OR (LENGTH(:name) >= 3 AND LOWER(r.name) LIKE LOWER(CONCAT('%', :name, '%')))) "
             + "AND (:country IS NULL OR LOWER(r.country) LIKE %:country%) "
             + "AND (:season IS NULL OR LOWER(r.season) LIKE %:season%) "
             + "AND (:difficulty IS NULL OR LOWER(r.difficulty) LIKE %:difficulty%) "
+            + "AND (:userId IS NULL OR LOWER(r.user.id) LIKE %:userId%) "
             + "AND (:ingredients IS NULL OR ("
             + "    SELECT COUNT(DISTINCT LOWER(ri.ingredient)) "
             + "    FROM RecipeIngredient ri "
@@ -30,6 +31,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, String> {
             @Param("country") String country,
             @Param("season") String season,
             @Param("difficulty") String difficulty,
+            @Param("userId") String userId,
             @Param("ingredients") List<String> ingredients,
             @Param("ingredientCount") long ingredientCount,
             Pageable pageable);

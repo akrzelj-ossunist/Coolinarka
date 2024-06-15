@@ -145,18 +145,20 @@ public class RecipeServiceImpl implements RecipeService {
         String name = allParams.get("name");
         String country = allParams.get("country");
         String season = allParams.get("season");
+        String userId = allParams.get("userId");
         String difficulty = allParams.get("difficulty");
-        List<String> ingredients = allParams.get("ingredients") != null
+        List<String> ingredients = allParams.get("ingredients") != null && !allParams.get("ingredients").isEmpty()
                 ? Arrays.asList(allParams.get("ingredients").toLowerCase().split(","))
                 : null;
 
         long ingredientCount = ingredients != null ? ingredients.size() : 0;
 
         Page<Recipe> recipePage = recipeRepository.findRecipesByFilters(
-                name != null ? name.toLowerCase() : null,
-                country != null ? country.toLowerCase() : null,
-                season != null ? season.toLowerCase() : null,
-                difficulty != null ? difficulty.toLowerCase() : null,
+                name != null && !name.isEmpty() ? name.toLowerCase() : null,
+                country != null && !country.isEmpty() ? country.toLowerCase() : null,
+                season != null && !season.isEmpty() ? season.toLowerCase() : null,
+                difficulty != null && difficulty.isEmpty() ? difficulty.toLowerCase() : null,
+                userId != null && userId.isEmpty() ? userId.toLowerCase() : null,
                 ingredients,
                 ingredientCount,
                 pageable);
