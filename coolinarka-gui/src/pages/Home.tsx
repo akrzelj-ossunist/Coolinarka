@@ -10,6 +10,7 @@ const Home: React.FC = () => {
     difficulty: "",
     ingredients: "",
     userId: "",
+    sort: "",
   });
 
   return (

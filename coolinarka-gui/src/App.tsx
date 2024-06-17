@@ -9,6 +9,7 @@ import EditProfile from "./pages/EditProfile";
 import ChangePassword from "./pages/ChangePassword";
 import RecipePage from "./pages/RecipePage";
 import Favorites from "./pages/Favorites";
+import DeleteRecipe from "./pages/DeleteRecipe";
 
 function App() {
   const navigate = useNavigate();
@@ -42,6 +43,10 @@ function App() {
     {
       path: "/Create-recipe",
       element: <CreateRecipe />,
+    },
+    {
+      path: "/Recipe/Delete/:recipeId",
+      element: <DeleteRecipe />,
     },
     {
       path: "/Recipe/:recipeId",

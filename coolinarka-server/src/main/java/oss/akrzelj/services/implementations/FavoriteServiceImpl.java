@@ -1,20 +1,13 @@
 package oss.akrzelj.services.implementations;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import oss.akrzelj.dtos.FavoritesDto;
-import oss.akrzelj.dtos.FavoritesResDto;
-import oss.akrzelj.dtos.RecipeResDto;
 import oss.akrzelj.dtos.recipe.response.RecipeResponseDto;
 import oss.akrzelj.exceptions.AlreadyExistException;
 import oss.akrzelj.exceptions.InvalidArgumentsException;
 import oss.akrzelj.exceptions.ObjectDoesntExistException;
-import oss.akrzelj.mappers.FavoritesMapper;
-import oss.akrzelj.mappers.RecipeMapper;
 import oss.akrzelj.models.Favorites;
-import oss.akrzelj.models.Recipe;
 import oss.akrzelj.models.User;
 import oss.akrzelj.repositories.FavoriteRepository;
 import oss.akrzelj.repositories.RecipeRepository;
@@ -28,8 +21,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class FavoriteServiceImpl implements FavoriteService {
     private final FavoriteRepository favoriteRepository;
-    private final FavoritesMapper favoritesMapper;
-    private final RecipeMapper recipeMapper;
     private final RecipeService recipeService;
     private final UserService userService;
     private final RecipeRepository recipeRepository;

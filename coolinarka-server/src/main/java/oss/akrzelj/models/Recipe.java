@@ -42,6 +42,9 @@ public class Recipe {
     @Column
     private int prepTime;
 
+    @Column
+    private double rating;
+
     @Column(name = "created_at")
     private Date createdAt;
 

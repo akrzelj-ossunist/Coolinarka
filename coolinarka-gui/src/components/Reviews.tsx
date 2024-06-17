@@ -6,11 +6,18 @@ import { addReview } from "../services/addReview";
 import useGetRecipeReviewsQuery from "../services/getRecipeReviews";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
+import Pagination from "./Pagination";
 
 const Reviews: React.FC<{ recipeId: string }> = ({ recipeId }) => {
   const authenticateState = useSelector(
     (state: RootState) => state.authenticate
   );
+  console.log(recipeId);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const currentPage = parseInt(searchParams.get("page") ?? "1");
+
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [review, setReview] = useState("");
@@ -18,7 +25,10 @@ const Reviews: React.FC<{ recipeId: string }> = ({ recipeId }) => {
   const [alreadyReviewed, setAlreadyReviewed] = useState(false);
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useGetRecipeReviewsQuery(recipeId);
+  const { data, isLoading } = useGetRecipeReviewsQuery({
+    recipeId: recipeId,
+    page: currentPage,
+  });
 
   const handleSubmit = async () => {
     try {
@@ -107,7 +117,7 @@ const Reviews: React.FC<{ recipeId: string }> = ({ recipeId }) => {
             return (
               <div
                 key={review.id}
-                className="flex border-b w-full pb-2 relative">
+                className="flex border-b w-full pb-2 relative my-6">
                 {[...Array(5)].map((_, index) => {
                   const currentRating = index + 1;
                   return (
@@ -139,6 +149,15 @@ const Reviews: React.FC<{ recipeId: string }> = ({ recipeId }) => {
           })
         )}
       </div>
+      {!isLoading && (
+        <Pagination
+          currentPage={currentPage}
+          lastPage={data.lastPage}
+          onClick={() =>
+            queryClient.invalidateQueries({ queryKey: ["reviews"] })
+          }
+        />
+      )}
     </div>
   );
 };

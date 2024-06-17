@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useGetRecipeByIdQuery from "../services/getRecipeById";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -11,7 +11,6 @@ const RecipePage: React.FC = () => {
     (state: RootState) => state.authenticate
   );
   const { data, isLoading } = useGetRecipeByIdQuery(recipeId!);
-
   return isLoading ? (
     <p>Loading...</p>
   ) : (
@@ -66,9 +65,11 @@ const RecipePage: React.FC = () => {
         </div>
         <div className="flex flex-col w-[70%] px-10 pt-4 border rounded shadow overflow-y-auto min-w-[400px] ml-5 mid:mt-5 phone:w-[375px] relative">
           {data.user.id === authenticateState.user.id && (
-            <button className="text-white cursor-pointer font-bold w-[170px] rounded-[4px] text-xl bg-red-600 active:bg-red-300 px-2 h-[38px] my-2 mr-3 ml-3 absolute right-2 top-0">
+            <Link
+              to={`/Recipe/Delete/${data.id}`}
+              className="text-white cursor-pointer font-bold w-[170px] rounded-[4px] text-xl bg-red-600 active:bg-red-300 px-2 h-[38px] my-2 mr-3 ml-3 absolute right-2 top-0 flex justify-center items-centery">
               Delete
-            </button>
+            </Link>
           )}
           <p className="text-3xl font-semibold text-[#40514e] mb-3 border-b-2 pb-2">
             Description:{" "}

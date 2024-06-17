@@ -139,3 +139,8 @@ export const seasons = [
   { value: "Autumn/Fall", label: "Autumn/Fall" },
   { value: "Winter", label: "Winter" },
 ];
+
+export const sortData = [
+  { value: "", label: "Date" },
+  { value: "rating", label: "Rating" },
+];

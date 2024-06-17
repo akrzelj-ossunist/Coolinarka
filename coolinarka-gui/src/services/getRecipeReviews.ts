@@ -1,10 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const getRecipeReviews = async (recipe: string) => {
+const getRecipeReviews = async (filters: any) => {
   try {
     const response = await axios.get(
-      `http://localhost:8080/api/v1/review/list/recipe/${recipe}`
+      `http://localhost:8080/api/v1/review/list/recipe/${filters.recipeId}`,
+      {
+        params: {
+          page: filters.page,
+        },
+      }
     );
     console.log(response.data);
     return response.data;
@@ -13,10 +18,10 @@ const getRecipeReviews = async (recipe: string) => {
   }
 };
 
-const useGetRecipeReviewsQuery = (recipe: any) => {
+const useGetRecipeReviewsQuery = (filters: any) => {
   return useQuery({
-    queryKey: ["reviews"],
-    queryFn: () => getRecipeReviews(recipe),
+    queryKey: ["reviews", filters],
+    queryFn: () => getRecipeReviews(filters),
   });
 };
 

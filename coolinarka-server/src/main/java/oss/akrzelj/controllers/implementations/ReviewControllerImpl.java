@@ -11,10 +11,8 @@ import oss.akrzelj.dtos.ReviewResDto;
 import oss.akrzelj.exceptions.AlreadyExistException;
 import oss.akrzelj.exceptions.InvalidArgumentsException;
 import oss.akrzelj.exceptions.ObjectDoesntExistException;
-import oss.akrzelj.mappers.ReviewMapper;
 import oss.akrzelj.services.interfaces.ReviewService;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController

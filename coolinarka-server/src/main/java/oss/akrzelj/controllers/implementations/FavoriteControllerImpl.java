@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import oss.akrzelj.controllers.interfaces.FavoriteController;
 import oss.akrzelj.dtos.FavoritesDto;
-import oss.akrzelj.dtos.RecipeResDto;
 import oss.akrzelj.dtos.recipe.response.RecipeResponseDto;
 import oss.akrzelj.exceptions.AlreadyExistException;
 import oss.akrzelj.exceptions.InvalidArgumentsException;
@@ -14,7 +13,6 @@ import oss.akrzelj.exceptions.ObjectDoesntExistException;
 import oss.akrzelj.services.interfaces.FavoriteService;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/favorite")

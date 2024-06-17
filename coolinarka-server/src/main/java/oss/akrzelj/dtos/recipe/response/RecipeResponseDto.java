@@ -27,6 +27,7 @@ public class RecipeResponseDto {
     private int people;
     private int prepTime;
     private String season;
+    private double rating;
     private List<RecipeIngredientResponseDto> ingredients = new ArrayList<>();
     private List<RecipePhaseResponseDto> phases = new ArrayList<>();
     private List<String> mealGroups = new ArrayList<>();

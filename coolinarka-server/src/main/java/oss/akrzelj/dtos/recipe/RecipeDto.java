@@ -22,6 +22,7 @@ public class RecipeDto {
     private String difficulty;
     private int people;
     private int prepTime;
+    private double rating = 0.00;
     private List<RecipeIngredientDto> ingredients = new ArrayList<>();
     private List<RecipePhaseDto> phases = new ArrayList<>();
     private List<String> mealGroup = new ArrayList<>();

@@ -1,12 +1,12 @@
 package oss.akrzelj.services.implementations;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import oss.akrzelj.dtos.RecipeResDto;
-import oss.akrzelj.dtos.UserPageDto;
 import oss.akrzelj.dtos.recipe.RecipeDto;
 import oss.akrzelj.dtos.recipe.RecipePageDto;
 import oss.akrzelj.dtos.recipe.response.RecipeResponseDto;
@@ -75,7 +75,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public RecipeResDto updateRecipe(String recipeId, RecipeDto recipeDto) {
+    public RecipeResponseDto updateRecipe(String recipeId, RecipeDto recipeDto) {
         return null;
     }
 
@@ -141,7 +141,11 @@ public class RecipeServiceImpl implements RecipeService {
         int page = allParams.get("page") != null ? Integer.parseInt(allParams.get("page")) - 1 : 0;
         int size = allParams.get("size") != null ? Integer.parseInt(allParams.get("size")) : 10;
 
-        Pageable pageable = PageRequest.of(page, size);
+        String sort = allParams.get("sort");
+        if (StringUtils.isEmpty(sort)) {
+            sort = "id";
+        }
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sort));
 
         String name = allParams.get("name");
         String country = allParams.get("country");

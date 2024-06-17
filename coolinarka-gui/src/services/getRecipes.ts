@@ -13,6 +13,8 @@ const getRecipes = async (filters: any) => {
           difficulty: filters.difficulty,
           ingredients: filters.ingredients,
           userId: filters.userId,
+          page: filters.page,
+          sort: filters.sort,
         },
       }
     );
@@ -23,7 +25,10 @@ const getRecipes = async (filters: any) => {
 };
 
 const useGetRecipesQuery = (filters: any) => {
-  return useQuery({ queryKey: [filters], queryFn: () => getRecipes(filters) });
+  return useQuery({
+    queryKey: [filters, "recipeList"],
+    queryFn: () => getRecipes(filters),
+  });
 };
 
 export default useGetRecipesQuery;

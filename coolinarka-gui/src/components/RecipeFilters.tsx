@@ -1,4 +1,4 @@
-import { countries, difficulty, seasons } from "../utils/data";
+import { countries, difficulty, seasons, sortData } from "../utils/data";
 import Select from "react-select";
 import { useState } from "react";
 import IconAddCircle from "../assets/Add";
@@ -13,6 +13,7 @@ const RecipeFilters: React.FC<{
     difficulty: "",
     ingredients: "",
     userId: "",
+    sort: "",
   });
 
   const [ingredient, setIngredient] = useState("");
@@ -42,6 +43,7 @@ const RecipeFilters: React.FC<{
       difficulty: "",
       ingredients: "",
       userId: "",
+      sort: "",
     });
     setFilters(newFilters);
   };
@@ -72,6 +74,14 @@ const RecipeFilters: React.FC<{
           }
           className="w-[170px] my-2"
           placeholder="Select difficulty"
+        />
+        <Select
+          options={sortData}
+          onChange={(option: any) =>
+            setNewFilters({ ...newFilters, sort: option.value })
+          }
+          className="w-[170px] my-2"
+          placeholder="Sort by"
         />
         <div className="relative">
           <input

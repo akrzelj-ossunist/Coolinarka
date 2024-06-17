@@ -1,6 +1,5 @@
 package oss.akrzelj.services.interfaces;
 
-import oss.akrzelj.dtos.RecipeResDto;
 import oss.akrzelj.dtos.recipe.RecipeDto;
 import oss.akrzelj.dtos.recipe.RecipePageDto;
 import oss.akrzelj.dtos.recipe.response.RecipeResponseDto;
@@ -9,14 +8,13 @@ import oss.akrzelj.exceptions.ObjectDoesntExistException;
 import oss.akrzelj.models.Recipe;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 public interface RecipeService {
 
     Boolean createRecipe(RecipeDto recipeDto) throws InvalidArgumentsException, IOException;
 
-    RecipeResDto updateRecipe(String recipeId, RecipeDto recipeDto);
+    RecipeResponseDto updateRecipe(String recipeId, RecipeDto recipeDto);
 
     void deleteRecipe(String recipeId) throws ObjectDoesntExistException;
     RecipeResponseDto recipeResponseMapper(Recipe recipe);
