@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import oss.akrzelj.dtos.recipe.response.RecipeResponseDto;
 import oss.akrzelj.models.Recipe;
 import oss.akrzelj.models.User;
 
@@ -17,9 +18,9 @@ public class ReviewResDto {
 
     private String id;
 
-    private User user;
+    private UserResDto user;
 
-    private Recipe recipe;
+    private RecipeResponseDto recipe;
 
     private int rating;
 

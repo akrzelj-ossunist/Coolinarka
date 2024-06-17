@@ -28,6 +28,8 @@ export default {
     },
     screens: {
       'phone': {"max": '450px'},
+
+      'mid': {"max": '800px'},
   
       'tablet': {"max": '1150px'},
   

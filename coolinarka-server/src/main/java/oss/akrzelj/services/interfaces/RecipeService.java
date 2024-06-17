@@ -19,7 +19,7 @@ public interface RecipeService {
     RecipeResDto updateRecipe(String recipeId, RecipeDto recipeDto);
 
     void deleteRecipe(String recipeId) throws ObjectDoesntExistException;
-
+    RecipeResponseDto recipeResponseMapper(Recipe recipe);
     RecipePageDto listAllRecipes(Map<String, String> allParams); //filter page, perPage and sort
 
     RecipePageDto filterRecipes(Map<String, String> allParams); //all random shit and filter page, perPage and sort

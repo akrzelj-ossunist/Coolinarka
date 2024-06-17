@@ -111,6 +111,7 @@ public class RecipeServiceImpl implements RecipeService {
                 .build();
     }
 
+    @Override
     public RecipeResponseDto recipeResponseMapper(Recipe recipe) {
         List<RecipeIngredient> ingredients = recipeIngredientRepository.findByRecipeId(recipe.getId());
         List<RecipePhase> phases = recipePhaseRepository.findByRecipeId(recipe.getId());
@@ -157,8 +158,8 @@ public class RecipeServiceImpl implements RecipeService {
                 name != null && !name.isEmpty() ? name.toLowerCase() : null,
                 country != null && !country.isEmpty() ? country.toLowerCase() : null,
                 season != null && !season.isEmpty() ? season.toLowerCase() : null,
-                difficulty != null && difficulty.isEmpty() ? difficulty.toLowerCase() : null,
-                userId != null && userId.isEmpty() ? userId.toLowerCase() : null,
+                difficulty != null && !difficulty.isEmpty() ? difficulty.toLowerCase() : null,
+                userId != null && !userId.isEmpty() ? userId : null,
                 ingredients,
                 ingredientCount,
                 pageable);

@@ -1,11 +1,16 @@
 package oss.akrzelj.controllers.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import oss.akrzelj.controllers.interfaces.ReviewController;
 import oss.akrzelj.dtos.ReviewDto;
+import oss.akrzelj.dtos.ReviewPageDto;
 import oss.akrzelj.dtos.ReviewResDto;
+import oss.akrzelj.exceptions.AlreadyExistException;
+import oss.akrzelj.exceptions.InvalidArgumentsException;
+import oss.akrzelj.exceptions.ObjectDoesntExistException;
 import oss.akrzelj.mappers.ReviewMapper;
 import oss.akrzelj.services.interfaces.ReviewService;
 
@@ -25,26 +30,25 @@ public class ReviewControllerImpl implements ReviewController {
     }
 
     @Override
-    public ResponseEntity<ReviewResDto> createReview(ReviewDto reviewDto) {
+    @PostMapping("/create")
+    public ResponseEntity<ReviewResDto> createReview(@RequestBody ReviewDto reviewDto) throws ObjectDoesntExistException, InvalidArgumentsException, AlreadyExistException {
+        System.out.println(reviewDto);
         ReviewResDto review = reviewService.createReview(reviewDto);
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(review);
     }
 
     @Override
-    public ResponseEntity<ReviewResDto> updateReview(String reviewId, ReviewDto reviewDto) {
-        ReviewResDto review = reviewService.updateReview(reviewId, reviewDto);
-        return null;
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteReview(@PathVariable String id) throws ObjectDoesntExistException {
+        reviewService.deleteReview(id);
+        return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
     @Override
-    public ResponseEntity<Boolean> deleteReview(String reviewId) {
-        reviewService.deleteReview(reviewId);
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<List<ReviewResDto>> recipeReviews(String recipeId, Map<String, String> allParams) {
-        List<ReviewResDto> reviewList = reviewService.recipeReviews(recipeId, allParams);
-        return null;
+    @GetMapping("/list/recipe/{id}")
+    public ResponseEntity<ReviewPageDto> recipeReviews(@PathVariable String id, @RequestParam Map<String, String> allParams) {
+        ReviewPageDto reviewList = reviewService.recipeReviews(id, allParams);
+        System.out.println(reviewList);
+        return ResponseEntity.status(HttpStatus.OK).body(reviewList);
     }
 }

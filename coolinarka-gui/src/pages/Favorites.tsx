@@ -1,23 +1,23 @@
-import { Link } from "react-router-dom";
-import useGetRecipesQuery from "../services/getRecipes";
-import Favorite from "./Favorite";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import useGetUserFavQuery from "../services/getUserFavorites";
+import { Link } from "react-router-dom";
+import Favorite from "../components/Favorite";
 
-const RecipeList: React.FC<{ filters: any }> = ({ filters }) => {
+const Favorites: React.FC = () => {
   const authenticateState = useSelector(
     (state: RootState) => state.authenticate
   );
   const imageUploadsUrl = import.meta.env.VITE_IMAGE_UPLOADS;
-  const { data, isLoading } = useGetRecipesQuery(filters);
-  console.log(filters);
+  const { data, isLoading } = useGetUserFavQuery(authenticateState.user.id);
+
   return (
-    <>
+    <div>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {data.recipePage.map((recipe: any) => (
+          {data?.map((recipe: any) => (
             <div
               key={recipe.id}
               className="p-4 border rounded shadow w-80 relative">
@@ -39,8 +39,8 @@ const RecipeList: React.FC<{ filters: any }> = ({ filters }) => {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
-export default RecipeList;
+export default Favorites;

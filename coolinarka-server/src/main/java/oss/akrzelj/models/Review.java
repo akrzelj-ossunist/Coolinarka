@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.*;
 
 @Entity
-@Table(name = "Reviews")
+@Table(name = "Review")
 @Data
 @Builder
 @NoArgsConstructor
@@ -13,8 +13,8 @@ import lombok.*;
 public class Review {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)

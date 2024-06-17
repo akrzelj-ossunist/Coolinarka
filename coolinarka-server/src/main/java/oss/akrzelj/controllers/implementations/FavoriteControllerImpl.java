@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import oss.akrzelj.controllers.interfaces.FavoriteController;
 import oss.akrzelj.dtos.FavoritesDto;
 import oss.akrzelj.dtos.RecipeResDto;
+import oss.akrzelj.dtos.recipe.response.RecipeResponseDto;
 import oss.akrzelj.exceptions.AlreadyExistException;
 import oss.akrzelj.exceptions.InvalidArgumentsException;
 import oss.akrzelj.exceptions.ObjectDoesntExistException;
@@ -28,31 +29,22 @@ public class FavoriteControllerImpl implements FavoriteController {
 
     @Override
     @PostMapping("/")
-    public ResponseEntity<Boolean> addToFavorites(FavoritesDto favoritesDto) throws InvalidArgumentsException, ObjectDoesntExistException, AlreadyExistException {
+    public ResponseEntity<Boolean> addToFavorites(@RequestBody FavoritesDto favoritesDto) throws InvalidArgumentsException, ObjectDoesntExistException, AlreadyExistException {
         favoriteService.addToFavorites(favoritesDto);
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
     @Override
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> removeFromFavorites(@PathVariable("id") String favoritesId) throws ObjectDoesntExistException, InvalidArgumentsException {
-        favoriteService.remove(favoritesId);
+    @DeleteMapping("/recipe/{id}/user/{uid}")
+    public ResponseEntity<Boolean> removeFromFavorites(@PathVariable("id") String favoritesId, @PathVariable("uid") String userId) throws ObjectDoesntExistException, InvalidArgumentsException {
+        favoriteService.remove(favoritesId, userId);
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
     @Override
     @GetMapping("/list/user/{id}")
-    public ResponseEntity<List<RecipeResDto>> getAll(@PathVariable("id") String userId, @RequestParam Map<String, String> allParams) throws ObjectDoesntExistException, InvalidArgumentsException {
-        int page = Integer.parseInt(allParams.get("page"));
-        int size = Integer.parseInt(allParams.get("size"));
-        List<RecipeResDto> favorites = favoriteService.getAll(userId, page, size);
+    public ResponseEntity<List<RecipeResponseDto>> getAll(@PathVariable("id") String userId) throws ObjectDoesntExistException, InvalidArgumentsException {
+        List<RecipeResponseDto> favorites = favoriteService.getAll(userId);
         return ResponseEntity.ok().body(favorites);
-    }
-
-    @Override
-    @GetMapping("/query/user/{id}")
-    public ResponseEntity<List<RecipeResDto>> listAllFavorites(@PathVariable("id") String userId, @RequestParam Map<String, String> allParams) {
-        List<RecipeResDto> filteredFavorites = favoriteService.filterByParams(userId, allParams);
-        return ResponseEntity.ok().body(filteredFavorites);
     }
 }

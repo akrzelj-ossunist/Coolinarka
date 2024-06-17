@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.*;
 
 @Entity
-@Table(name = "Favorites")
+@Table(name = "Favorite")
 @Data
 @Builder
 @NoArgsConstructor

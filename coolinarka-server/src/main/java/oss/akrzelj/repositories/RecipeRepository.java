@@ -21,7 +21,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, String> {
             + "AND (:country IS NULL OR LOWER(r.country) LIKE %:country%) "
             + "AND (:season IS NULL OR LOWER(r.season) LIKE %:season%) "
             + "AND (:difficulty IS NULL OR LOWER(r.difficulty) LIKE %:difficulty%) "
-            + "AND (:userId IS NULL OR LOWER(r.user.id) LIKE %:userId%) "
+            + "AND (:userId IS NULL OR r.user.id = :userId) " // changed this line
             + "AND (:ingredients IS NULL OR ("
             + "    SELECT COUNT(DISTINCT LOWER(ri.ingredient)) "
             + "    FROM RecipeIngredient ri "

@@ -8,6 +8,7 @@ import oss.akrzelj.models.Recipe;
 import oss.akrzelj.models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FavoriteRepository extends JpaRepository<Favorites, String> {
@@ -15,4 +16,10 @@ public interface FavoriteRepository extends JpaRepository<Favorites, String> {
     Favorites findByRecipe(Recipe recipe);
 
     List<Favorites> findByUser(User user, PageRequest pageRequest);
+
+    List<Favorites> findByUserId(String userId);
+
+    Optional<Favorites> findByRecipeId(String favoriteId);
+
+    Optional<Favorites> findByRecipeIdAndUserId(String favoriteId, String userId);
 }
