@@ -64,10 +64,17 @@ const RecipePage: React.FC = () => {
           </div>
         </div>
         <div className="flex flex-col w-[70%] px-10 pt-4 border rounded shadow overflow-y-auto min-w-[400px] ml-5 mid:mt-5 phone:w-[375px] relative">
-          {data.user.id === authenticateState.user.id && (
+        {(data.user.id === authenticateState.user.id || authenticateState.user.role === "ADMIN") && (
+            <Link
+              to={`/Recipe/Update/${data.id}`}
+              className="text-white cursor-pointer font-bold w-[170px] rounded-[4px] text-xl bg-slate-500 active:bg-red-300 px-2 h-[38px] my-2 mr-3 ml-3 absolute right-44 top-0 flex justify-center items-center">
+              Update
+            </Link>
+          )}
+          {(data.user.id === authenticateState.user.id || authenticateState.user.role === "ADMIN") && (
             <Link
               to={`/Recipe/Delete/${data.id}`}
-              className="text-white cursor-pointer font-bold w-[170px] rounded-[4px] text-xl bg-red-600 active:bg-red-300 px-2 h-[38px] my-2 mr-3 ml-3 absolute right-2 top-0 flex justify-center items-centery">
+              className="text-white cursor-pointer font-bold w-[170px] rounded-[4px] text-xl bg-red-600 active:bg-red-300 px-2 h-[38px] my-2 mr-3 ml-3 absolute right-2 top-0 flex justify-center items-center">
               Delete
             </Link>
           )}

@@ -136,7 +136,7 @@ const Reviews: React.FC<{ recipeId: string }> = ({ recipeId }) => {
                   </p>
                   <p className="">{review.comment}</p>
                 </div>
-                {review.user.id === authenticateState.user.id && (
+                {(review.user.id === authenticateState.user.id || authenticateState.user.role === "ADMIN") && (
                   <button
                     type="submit"
                     onClick={() => handleDelete(review.id)}

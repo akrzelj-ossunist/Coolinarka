@@ -15,7 +15,7 @@ const Tags: React.FC = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex">
+      <div className="flex my-4">
         <label htmlFor="people">People: </label>
         <Field
           name="people"
@@ -29,7 +29,7 @@ const Tags: React.FC = () => {
           className="text-sm text-red-500 font-bold"
         />
       </div>
-      <div className="flex">
+      <div className="flex my-4">
         <label htmlFor="prepTime">Preparation Time</label>
         <Field
           name="prepTime"
@@ -43,7 +43,7 @@ const Tags: React.FC = () => {
           className="text-sm text-red-500 font-bold"
         />
       </div>
-      <div>
+      <div className="my-4">
         <Field name="difficulty">
           {({ field }: any) => (
             <Select
@@ -55,7 +55,7 @@ const Tags: React.FC = () => {
               value={difficulty.find(
                 (option) => option.value === values.difficulty
               )}
-              placeholder="Select season"
+              placeholder="Select difficulty"
             />
           )}
         </Field>
@@ -65,7 +65,7 @@ const Tags: React.FC = () => {
           className="text-sm text-red-500 font-bold"
         />
       </div>
-      <div>
+      <div className="my-4">
         <Field name="country">
           {({ field }: any) => (
             <Select
@@ -85,7 +85,7 @@ const Tags: React.FC = () => {
           className="text-sm text-red-500 font-bold"
         />
       </div>
-      <div>
+      <div className="my-4">
         <Field name="mealGroup">
           {({ field }: any) => (
             <Select
@@ -110,7 +110,7 @@ const Tags: React.FC = () => {
           className="text-sm text-red-500 font-bold"
         />
       </div>
-      <div>
+      <div className="my-4">
         <Field name="events">
           {({ field }: any) => (
             <Select
@@ -135,7 +135,7 @@ const Tags: React.FC = () => {
           className="text-sm text-red-500 font-bold"
         />
       </div>
-      <div>
+      <div className="my-4 mb-10">
         <Field name="season">
           {({ field }: any) => (
             <Select

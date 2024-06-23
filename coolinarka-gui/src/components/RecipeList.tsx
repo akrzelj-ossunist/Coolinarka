@@ -24,7 +24,7 @@ const RecipeList: React.FC<{ filters: any }> = ({ filters }) => {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="grid gap-4 grid-cols-4">
+        <div className="grid gap-4 grid-cols-4 grid-2:grid-cols-2 grid-3:grid-cols-3 mid:grid-cols-1 mid:flex mid:flex-col mid:items-center">
           {data.recipePage.map((recipe: any) => (
             <div
               key={recipe.id}

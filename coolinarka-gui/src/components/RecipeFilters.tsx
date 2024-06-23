@@ -73,7 +73,7 @@ const RecipeFilters: React.FC<{
             setNewFilters({ ...newFilters, difficulty: option.value })
           }
           className="w-[170px] my-2"
-          placeholder="Select difficulty"
+          placeholder="Difficulty"
         />
         <Select
           options={sortData}

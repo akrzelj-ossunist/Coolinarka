@@ -10,6 +10,9 @@ import ChangePassword from "./pages/ChangePassword";
 import RecipePage from "./pages/RecipePage";
 import Favorites from "./pages/Favorites";
 import DeleteRecipe from "./pages/DeleteRecipe";
+import DeleteUser from "./pages/DeleteUser";
+import UserList from "./pages/UserList";
+import UpdateRecipe from "./pages/UpdateRecipe";
 
 function App() {
   const navigate = useNavigate();
@@ -47,6 +50,18 @@ function App() {
     {
       path: "/Recipe/Delete/:recipeId",
       element: <DeleteRecipe />,
+    },
+    {
+      path: "/Recipe/Update/:recipeId",
+      element: <UpdateRecipe />,
+    },
+    {
+      path: "/User/Delete/:userId",
+      element: <DeleteUser />,
+    },
+    {
+      path: "/User/List",
+      element: <UserList />,
     },
     {
       path: "/Recipe/:recipeId",

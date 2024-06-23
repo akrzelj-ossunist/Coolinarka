@@ -42,10 +42,11 @@ public class RecipeControllerImpl implements RecipeController {
     }
 
     @Override
-    @PutMapping("/{id}")
-    public ResponseEntity<Boolean> editRecipe(@PathVariable String id, @RequestBody RecipeDto recipeDto) {
-        //RecipeResDto recipe = recipeService.updateRecipe(recipeId, recipeDto);
-        return null;
+    @PutMapping(value = "/{id}", consumes = {"multipart/form-data"})
+    public ResponseEntity<Boolean> editRecipe(@PathVariable String id, @RequestPart("recipe") RecipeDto recipeDto, @RequestPart("image") MultipartFile image) throws ObjectDoesntExistException, IOException, InvalidArgumentsException {
+        recipeDto.setImage(image);
+        recipeService.updateRecipe(id, recipeDto);
+        return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
     @Override

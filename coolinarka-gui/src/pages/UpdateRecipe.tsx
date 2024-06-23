@@ -6,21 +6,27 @@ import Tags from "../components/RecipeForm.tsx/Tags";
 import { FormValues } from "../utils/interfaces";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { recipeCreate } from "../services/recipeCreate";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useGetRecipeByIdQuery from "../services/getRecipeById";
+import { updateRecipe } from "../services/updateRecipe";
 
-const CreateRecipe: React.FC = () => {
+const UpdateRecipe: React.FC = () => {
+  const { recipeId } = useParams();
   const authenticateState = useSelector(
     (state: RootState) => state.authenticate
   );
 
   const navigate = useNavigate();
-  useEffect(() => {
-    !authenticateState.success && navigate("/Login");
-  }, [authenticateState.success]);
+  const { data, isLoading } = useGetRecipeByIdQuery(recipeId || "");
 
-  const initialValues: FormValues = {
+  useEffect(() => {
+    if (!authenticateState.success) {
+      navigate("/Login");
+    }
+  }, [authenticateState.success, navigate]);
+
+  const [initialValues, setInitialValues] = useState<FormValues>({
     image: "",
     name: "",
     description: "",
@@ -44,7 +50,33 @@ const CreateRecipe: React.FC = () => {
     mealGroup: [],
     events: [],
     season: "",
-  };
+  });
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setInitialValues({
+        image: "",
+        name: data.name,
+        description: data.description,
+        ingredients: data.ingredients.map((el: any) => ({
+          ingredient: el.ingredient,
+          amount: el.amount,
+          unit: el.unit,
+        })),
+        phases: data.phases.map((el: any) => ({
+          index: el.index,
+          description: el.description,
+        })),
+        people: data.people,
+        prepTime: data.prepTime,
+        difficulty: data.difficulty,
+        country: data.country,
+        mealGroup: data.mealGroups.map((el: any) => el),
+        events: data.events.map((el: any) => el),
+        season: data.season,
+      });
+    }
+  }, [isLoading, data]);
 
   const validationSchema = Yup.object({
     image: Yup.mixed().required("Required"),
@@ -78,20 +110,24 @@ const CreateRecipe: React.FC = () => {
     season: Yup.string().required("Required"),
   });
 
-  const handleSubmit = (value: FormValues) => {
+  const handleSubmit = async (values: FormValues) => {
     try {
-      recipeCreate({ ...value, userId: authenticateState.user.id });
-      navigate("/Profile");
+      await updateRecipe({ ...values, userId: authenticateState.user.id }, recipeId || "");
+      navigate(`/Home`);
     } catch (error) {
       console.error(error);
     }
   };
 
-  return (
+  return isLoading ? (
+    <p>Loading...</p>
+  ) : (
     <Formik
       initialValues={initialValues}
+      enableReinitialize={true}
       validationSchema={validationSchema}
-      onSubmit={(values) => handleSubmit(values)}>
+      onSubmit={(values) => handleSubmit(values)}
+    >
       <Form className="grid grid-cols-12 gap-4 w-full">
         <div className="col-span-6">
           <Introduction />
@@ -102,7 +138,8 @@ const CreateRecipe: React.FC = () => {
         </div>
         <button
           type="submit"
-          className="text-white cursor-pointer font-bold w-[100px] rounded-xl text-xl bg-[#11999e] py-2 active:bg-blue-300 shadow-lg absolute right-24 top-16">
+          className="text-white cursor-pointer font-bold w-[100px] rounded-xl text-xl bg-[#11999e] py-2 active:bg-blue-300 shadow-lg absolute right-24 top-16"
+        >
           Submit
         </button>
       </Form>
@@ -110,4 +147,4 @@ const CreateRecipe: React.FC = () => {
   );
 };
 
-export default CreateRecipe;
+export default UpdateRecipe;

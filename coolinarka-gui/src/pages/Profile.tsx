@@ -11,7 +11,7 @@ const Profile: React.FC = () => {
     (state: RootState) => state.authenticate
   );
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     !authenticateState.success && navigate("/Login");
   }, [authenticateState.success]);

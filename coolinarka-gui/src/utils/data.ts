@@ -141,6 +141,6 @@ export const seasons = [
 ];
 
 export const sortData = [
-  { value: "", label: "Date" },
+  { value: "", label: "ID" },
   { value: "rating", label: "Rating" },
 ];

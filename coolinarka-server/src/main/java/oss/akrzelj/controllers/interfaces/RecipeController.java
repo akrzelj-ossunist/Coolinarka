@@ -1,6 +1,8 @@
 package oss.akrzelj.controllers.interfaces;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import oss.akrzelj.dtos.recipe.RecipeDto;
 import oss.akrzelj.dtos.recipe.RecipePageDto;
@@ -15,7 +17,7 @@ public interface RecipeController {
 
     ResponseEntity<Boolean> addNewRecipe(RecipeDto recipeDto, MultipartFile image) throws IOException, InvalidArgumentsException;
 
-    ResponseEntity<Boolean> editRecipe(String recipeId, RecipeDto recipeDto);
+    public ResponseEntity<Boolean> editRecipe(@PathVariable String id, @RequestPart("recipe") RecipeDto recipeDto, @RequestPart("image") MultipartFile image) throws ObjectDoesntExistException, IOException, InvalidArgumentsException;
 
     ResponseEntity<Boolean> deleteRecipe(String recipeId) throws ObjectDoesntExistException;
 

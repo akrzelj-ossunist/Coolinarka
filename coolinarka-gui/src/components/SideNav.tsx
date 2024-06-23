@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../redux/features/authentication/authenticate";
 import { AppDispacth, RootState } from "../redux/store";
 import { useOnClickOutside } from "usehooks-ts";
@@ -17,6 +17,7 @@ const SideNav: React.FC<{ sx?: string; navContent?: any[] }> = ({
   const ref = useRef<HTMLDivElement | null>(null);
   useOnClickOutside(ref, () => setDropMenu(false));
 
+  const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
 
@@ -50,7 +51,10 @@ const SideNav: React.FC<{ sx?: string; navContent?: any[] }> = ({
                           Create recipe
                         </Link>
                         <p
-                          onClick={() => dispatch(logout())}
+                          onClick={() => {
+                            navigate('/Login');
+                            dispatch(logout());
+                          }}
                           className="cursor-pointer hover:bg-[#40514e] px-10 py-2 rounded-md font-semibold hover:text-white ease-in-out duration-300">
                           Logout
                         </p>

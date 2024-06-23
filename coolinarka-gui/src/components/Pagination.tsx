@@ -27,7 +27,7 @@ const Pagination: React.FC<{
       </button>
       <button
         className={`mx-4 ${
-          currentPage === lastPage ? "bg-slate-200" : "bg-white"
+          currentPage >= lastPage ? "bg-slate-200" : "bg-white"
         } shadow rounded px-3 font-semibold`}
         onClick={() => {
           if (currentPage < lastPage) {

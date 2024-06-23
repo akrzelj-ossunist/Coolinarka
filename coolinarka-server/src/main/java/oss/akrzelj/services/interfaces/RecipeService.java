@@ -14,7 +14,7 @@ public interface RecipeService {
 
     Boolean createRecipe(RecipeDto recipeDto) throws InvalidArgumentsException, IOException;
 
-    RecipeResponseDto updateRecipe(String recipeId, RecipeDto recipeDto);
+    RecipeResponseDto updateRecipe(String recipeId, RecipeDto recipeDto) throws ObjectDoesntExistException, IOException, InvalidArgumentsException;
 
     void deleteRecipe(String recipeId) throws ObjectDoesntExistException;
     RecipeResponseDto recipeResponseMapper(Recipe recipe);

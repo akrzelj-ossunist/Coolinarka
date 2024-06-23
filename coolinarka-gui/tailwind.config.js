@@ -29,6 +29,10 @@ export default {
     screens: {
       'phone': {"max": '450px'},
 
+      'grid-3': {"max": '1600px'},
+
+      'grid-2': {"max": '1400px'},
+
       'mid': {"max": '800px'},
   
       'tablet': {"max": '1150px'},

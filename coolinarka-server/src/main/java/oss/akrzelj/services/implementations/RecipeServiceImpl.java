@@ -75,7 +75,9 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public RecipeResponseDto updateRecipe(String recipeId, RecipeDto recipeDto) {
+    public RecipeResponseDto updateRecipe(String recipeId, RecipeDto recipeDto) throws ObjectDoesntExistException, IOException, InvalidArgumentsException {
+        deleteRecipe(recipeId);
+        createRecipe(recipeDto);
         return null;
     }
 
@@ -95,7 +97,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public RecipePageDto listAllRecipes(Map<String, String> allParams) {
         int page = allParams.get("page") != null ? Integer.parseInt(allParams.get("page")) - 1 : 0;
-        int size = allParams.get("size") != null ? Integer.parseInt(allParams.get("size")) : 1;
+        int size = allParams.get("size") != null ? Integer.parseInt(allParams.get("size")) : 8;
 
         Pageable pageable = (Pageable) PageRequest.of(page, size);
 
@@ -139,7 +141,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     public RecipePageDto filterRecipes(Map<String, String> allParams) {
         int page = allParams.get("page") != null ? Integer.parseInt(allParams.get("page")) - 1 : 0;
-        int size = allParams.get("size") != null ? Integer.parseInt(allParams.get("size")) : 10;
+        int size = allParams.get("size") != null ? Integer.parseInt(allParams.get("size")) : 6;
 
         String sort = allParams.get("sort");
         if (StringUtils.isEmpty(sort)) {
